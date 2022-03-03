@@ -24,10 +24,11 @@ const UI = ({ value }: { value: string }) => {
   const { parsed, prefix } = p;
 
   const codes = Object.entries(parsed.paths)
-    .map(([pathname, responses], i) => {
-      const methods: T.Method[] = Object.keys(responses).filter((x) =>
-        C.methodsKeywords.includes(x.toUpperCase())
-      ) as T.Method[];
+    .map(([pathname, responses]) => {
+      const responseKeys = Object.keys(responses) as T.Method[];
+      const methods: T.Method[] = responseKeys.filter((x) =>
+        C.methodsKeywords.includes(x)
+      );
 
       if (methods.length < 1) {
         throw Error("no method associated");
@@ -56,8 +57,9 @@ const UI = ({ value }: { value: string }) => {
     <>
       <ul>
         {Object.entries(parsed.paths).map(([pathname, responses], i) => {
-          const methods: string[] = Object.keys(responses).filter((x) =>
-            C.methodsKeywords.includes(x.toUpperCase())
+          const responseKeys = Object.keys(responses) as T.Method[];
+          const methods: string[] = responseKeys.filter((x) =>
+            C.methodsKeywords.includes(x)
           );
 
           if (methods.length < 1) {

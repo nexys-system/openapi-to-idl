@@ -1,7 +1,7 @@
 import * as T from "./type";
 import * as U from "./utils";
 
-export const methodsKeywords = ["GET", "POST", "PUT", "DELETE", "CREATE"];
+export const methodsKeywords: T.Method[] = ["get", "post"]; //POST", "PUT", "DELETE", "CREATE"];
 
 const isContent = (
   c: Pick<T.Response, "content"> | { "#ref": string }

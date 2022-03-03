@@ -25,9 +25,9 @@ const UI = ({ value }: { value: string }) => {
 
   const codes = Object.entries(parsed.paths)
     .map(([pathname, responses], i) => {
-      const methods: string[] = Object.keys(responses).filter((x) =>
+      const methods: T.Method[] = Object.keys(responses).filter((x) =>
         C.methodsKeywords.includes(x.toUpperCase())
-      );
+      ) as T.Method[];
 
       if (methods.length < 1) {
         throw Error("no method associated");
@@ -39,6 +39,11 @@ const UI = ({ value }: { value: string }) => {
 
       const [method] = methods;
       const path = responses[method];
+
+      if (!path) {
+        throw Error("path undefined");
+      }
+
       const code = C.toCode(
         path,
         pathname,

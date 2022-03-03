@@ -22,11 +22,13 @@ const getRequestBody = (
     return;
   }
 
-  return U.toTSDefinitionWithAny(
-    requestBody.content["application/json"].schema
-  );
+  const preSchema = requestBody.content["application/json"];
 
-  //
+  if (!preSchema) {
+    return;
+  }
+
+  return U.toTSDefinitionWithAny(preSchema.schema);
 };
 
 const getQuery = ({
@@ -68,7 +70,13 @@ export const toCode = (
     throw Error("could not find response 200");
   }
 
-  const items = response.content["application/json"].schema;
+  const preSchema = response.content["application/json"];
+
+  if (!preSchema) {
+    throw Error("application/json undefined");
+  }
+
+  const { schema } = preSchema;
 
   const q = getQuery(path);
   const body = getRequestBody(path, components);
@@ -91,7 +99,7 @@ export const toCode = (
     /-/g,
     "_"
   )} = async (${params.join(", ")}): Promise<${U.toTSDefinitionWithAny(
-    items
+    schema
   )}> => {
   const url = urlPrefix + ${url};
   

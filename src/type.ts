@@ -7,12 +7,14 @@ export interface Item {
   items?: Item;
 }
 
-//export type Method = "get" | "post";
+export type Method = "get" | "post";
+
+type ContentType = "application/json";
 
 export interface Response {
   summary?: string;
   tags?: string[];
-  content: { [contentType: string]: { schema: Item } }; // contentType: 'application/json' etc
+  content: { [contentType in ContentType]?: { schema: Item } };
 }
 
 export interface Parameter {
@@ -22,16 +24,14 @@ export interface Parameter {
   schema: Pick<Item, "type">;
 }
 
+type ResponseCode = 200 | 201 | 400; // responsecode: 200, 201, 400, etc
+
 export interface Path {
   description: string;
   operationId: string;
-  responses?: { [responseCode: number]: Response }; // responsecode: 200, 201, 400, etc
+  responses?: { [responseCode in ResponseCode]?: Response };
   parameters?: Parameter[];
   requestBody?: { "#ref": string } | Pick<Response, "content">;
-}
-
-export interface OpenAPIPath {
-  [method: string]: Path;
 }
 
 export interface Components {
@@ -40,5 +40,5 @@ export interface Components {
 
 export interface OpenAPI {
   components?: Components;
-  paths: { [path: string]: OpenAPIPath };
+  paths: { [path: string]: { [method in Method]?: Path } };
 }

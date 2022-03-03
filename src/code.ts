@@ -61,7 +61,7 @@ const getQuery = ({
 export const toCode = (
   path: T.Path,
   pathName: string,
-  method: "GET" | "POST",
+  method: T.Method,
   components?: T.Components
 ) => {
   const response = path.responses?.[200];

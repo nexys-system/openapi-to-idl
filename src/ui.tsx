@@ -44,12 +44,7 @@ const UI = ({ value }: { value: string }) => {
         throw Error("path undefined");
       }
 
-      const code = C.toCode(
-        path,
-        pathname,
-        method as "GET" | "POST",
-        parsed.components
-      );
+      const code = C.toCode(path, pathname, method, parsed.components);
 
       return code;
     })

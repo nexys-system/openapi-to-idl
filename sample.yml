@@ -1,0 +1,560 @@
+openapi: 3.1.0
+info:
+  title: TSS Academy
+  version: "1.1"
+  summary: TSS Academy API
+  description: Reference for the TSS Academy API
+  contact:
+    name: Johan Boissard
+    url: "https://nexys.ch"
+    email: johan@nexys.io
+servers:
+  - url: "https://tssacademy.biz/api"
+    description: prod
+  - url: "https://test.tssacademy.biz/api"
+    description: test
+  - url: "https://stage.tssacademy.biz/api"
+    description: stage
+paths:
+  /notifications/list:
+    parameters: []
+    get:
+      summary: List of notifications
+      tags:
+        - meta
+      responses:
+        "200":
+          description: User Found
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  properties:
+                    uuid:
+                      type: string
+                      minLength: 1
+                    content:
+                      type: string
+                      minLength: 1
+                    title:
+                      type: string
+                    isValidationRequired:
+                      type: boolean
+                  required:
+                    - uuid
+                    - content
+                    - isValidationRequired
+              examples: {}
+      operationId: get-users-userId
+      description: retrive list of notifications
+      parameters: []
+  /module/list:
+    get:
+      summary: Module list
+      tags:
+        - module
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - points
+                    - language
+                    - description
+                    - title
+                    - status
+                    - tag
+                    - module
+                    - certModuleId
+                    - position
+                    - isMandatory
+                    - progress
+                    - passed
+                  properties:
+                    id:
+                      type: number
+                    points:
+                      type: number
+                    language:
+                      type: number
+                    description:
+                      type: string
+                      minLength: 1
+                    title:
+                      type: string
+                      minLength: 1
+                    status:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        description: {}
+                      required:
+                        - id
+                        - name
+                    tag:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        color:
+                          type: string
+                          minLength: 1
+                        label:
+                          type: string
+                          minLength: 1
+                      required:
+                        - id
+                        - color
+                        - label
+                    module:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                      required:
+                        - id
+                    certModuleId:
+                      type: number
+                    position:
+                      type: number
+                    isMandatory:
+                      type: number
+                    progress:
+                      type: number
+                    passed:
+                      type: number
+      operationId: get-module-list
+      description: get the list of modules
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: lang
+          description: requested lang
+  /module/detail:
+    post:
+      summary: Module detail
+      operationId: post-module-detail
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ""
+                type: object
+                properties:
+                  id:
+                    type: number
+                  isMandatory:
+                    type: number
+                  position:
+                    type: number
+                  module:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      externalId:
+                        type: number
+                      label: {}
+                      points:
+                        type: number
+                      color: {}
+                      tag:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                        required:
+                          - id
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                        required:
+                          - id
+                    required:
+                      - id
+                      - externalId
+                      - points
+                      - tag
+                      - status
+                  cert:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                    required:
+                      - id
+                  description:
+                    type: string
+                    minLength: 1
+                  title:
+                    type: string
+                    minLength: 1
+                required:
+                  - id
+                  - isMandatory
+                  - position
+                  - module
+                  - cert
+                  - description
+                  - title
+                x-examples:
+                  example-1:
+                    id: 28
+                    isMandatory: 0
+                    position: 2
+                    module:
+                      id: 527
+                      externalId: 1000
+                      label: null
+                      points: 0
+                      color: null
+                      tag:
+                        id: 7
+                      status:
+                        id: 3
+                    cert:
+                      id: 1
+                    description: Introduction to TSS Academy and welcome
+                    title: TSS Academy Introduction
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: language
+      requestBody:
+        $ref: "#/components/requestBodies/by-id"
+      tags:
+        - module
+      description: Get the module content/detail
+  /lesson/list:
+    parameters: []
+    post:
+      summary: Lesson list
+      operationId: post-lesson-list
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - description
+                    - title
+                    - language
+                    - externalId
+                    - isMandatory
+                    - isTest
+                    - passed
+                  properties:
+                    id:
+                      type: number
+                    description:
+                      type: string
+                      minLength: 1
+                    title:
+                      type: string
+                      minLength: 1
+                    testNQuestion: {}
+                    language:
+                      type: number
+                    testWeight: {}
+                    externalId:
+                      type: number
+                    testPassrate: {}
+                    reference: {}
+                    isMandatory:
+                      type: number
+                    isTest:
+                      type: boolean
+                    passed:
+                      type: boolean
+                x-examples:
+                  example-1:
+                    - id: 649
+                      description: You get an overview of the TSS Academy and its content.
+                      title: Introduction to TSS Academy
+                      testNQuestion: null
+                      language: 1
+                      testWeight: null
+                      externalId: 100010
+                      testPassrate: null
+                      reference: null
+                      isMandatory: 0
+                      isTest: false
+                      passed: true
+      description: get the list of lessons
+      tags:
+        - lesson
+      requestBody:
+        $ref: "#/components/requestBodies/by-id"
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: language
+  /lesson/detail:
+    post:
+      summary: Lesson detail
+      operationId: post-lesson-detail
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ""
+                type: object
+                properties:
+                  lesson:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      description:
+                        type: string
+                        minLength: 1
+                      title:
+                        type: string
+                        minLength: 1
+                      testNQuestion: {}
+                      language:
+                        type: number
+                      testWeight: {}
+                      externalId:
+                        type: number
+                      testPassrate: {}
+                      reference: {}
+                      isMandatory:
+                        type: number
+                      isTest:
+                        type: boolean
+                      passed:
+                        type: boolean
+                    required:
+                      - id
+                      - description
+                      - title
+                      - language
+                      - externalId
+                      - isMandatory
+                      - isTest
+                      - passed
+                  prev: {}
+                required:
+                  - lesson
+                x-examples:
+                  example-1:
+                    lesson:
+                      id: 649
+                      description: You get an overview of the TSS Academy and its content.
+                      title: Introduction to TSS Academy
+                      testNQuestion: null
+                      language: 1
+                      testWeight: null
+                      externalId: 100010
+                      testPassrate: null
+                      reference: null
+                      isMandatory: 0
+                      isTest: false
+                      passed: true
+                    prev: null
+      description: get the lesson details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                language:
+                  type: string
+                moduleId:
+                  type: number
+              required:
+                - id
+                - language
+                - moduleId
+      tags:
+        - lesson
+  /lesson/resources:
+    get:
+      summary: Lesson Resources
+      tags:
+        - lesson
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - category
+                    - resource
+                    - position
+                    - content
+                  properties:
+                    id:
+                      type: number
+                    category:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                      required:
+                        - id
+                    resource:
+                      type: object
+                      properties:
+                        subType:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                          required:
+                            - id
+                        url:
+                          type: string
+                          minLength: 1
+                        type:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                          required:
+                            - id
+                        id:
+                          type: number
+                        label:
+                          type: string
+                          minLength: 1
+                      required:
+                        - subType
+                        - url
+                        - type
+                        - id
+                        - label
+                    position:
+                      type: number
+                    content:
+                      type: boolean
+                x-examples:
+                  example-1:
+                    - id: 3123
+                      category:
+                        id: 1
+                      resource:
+                        subType:
+                          id: 5
+                        url: "https://alink"
+                        type:
+                          id: 1
+                        id: 2360
+                        label: Introduction to TSS Academy
+                      position: 1216
+                      content: true
+      operationId: get-lesson-resources
+      description: get the lesson resources
+      requestBody:
+        $ref: "#/components/requestBodies/by-id"
+      parameters: []
+  /lesson/resource/record:
+    post:
+      description: records user progress
+      summary: Lesson record progress
+      operationId: post-lesson-resource-record
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+        - lesson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ""
+              type: object
+              properties:
+                resource:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                  required:
+                    - id
+                lesson:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                  required:
+                    - id
+              required:
+                - resource
+                - lesson
+              x-examples:
+                example-1:
+                  resource:
+                    id: 3123
+                  lesson:
+                    id: 649
+components:
+  schemas: {}
+  requestBodies:
+    by-id:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+            required:
+              - id
+      description: fetch resource by id
+  securitySchemes: {}
+tags:
+  - name: meta
+  - name: module
+  - name: lesson

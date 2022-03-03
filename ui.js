@@ -10,8 +10,9 @@ const UI = ({value}) => {
     });
   }
   const {parsed, prefix} = p;
-  const codes = Object.entries(parsed.paths).map(([pathname, responses], i) => {
-    const methods = Object.keys(responses).filter((x) => C.methodsKeywords.includes(x.toUpperCase()));
+  const codes = Object.entries(parsed.paths).map(([pathname, responses]) => {
+    const responseKeys = Object.keys(responses);
+    const methods = responseKeys.filter((x) => C.methodsKeywords.includes(x));
     if (methods.length < 1) {
       throw Error("no method associated");
     }
@@ -28,7 +29,8 @@ const UI = ({value}) => {
   }).join("\n\n");
   const codeOut = [C.codePrefix(prefix), codes].join("\n\n");
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("ul", null, Object.entries(parsed.paths).map(([pathname, responses], i) => {
-    const methods = Object.keys(responses).filter((x) => C.methodsKeywords.includes(x.toUpperCase()));
+    const responseKeys = Object.keys(responses);
+    const methods = responseKeys.filter((x) => C.methodsKeywords.includes(x));
     if (methods.length < 1) {
       throw Error("no method associated");
     }

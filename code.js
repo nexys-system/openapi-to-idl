@@ -1,5 +1,5 @@
 import * as U from "./utils.js";
-export const methodsKeywords = ["GET", "POST", "PUT", "DELETE", "CREATE"];
+export const methodsKeywords = ["get", "post"];
 const isContent = (c) => !!c.content;
 const getRequestBody = ({requestBody}, components) => {
   if (!requestBody) {

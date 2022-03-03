@@ -15,14 +15,30 @@ export interface Response {
   content: { [contentType: string]: { schema: Item } }; // contentType: 'application/json' etc
 }
 
+export interface Parameter {
+  description?: string;
+  in: "query";
+  name: string;
+  schema: Pick<Item, "type">;
+}
+
+export interface Path {
+  description: string;
+  operationId: string;
+  responses?: { [responseCode: number]: Response }; // responsecode: 200, 201, 400, etc
+  parameters?: Parameter[];
+  requestBody?: { "#ref": string } | Pick<Response, "content">;
+}
+
 export interface OpenAPIPath {
-  [method: string]: {
-    description: string;
-    operationId: string;
-    responses?: { [responseCode: number]: Response }; // responsecode: 200, 201, 400, etc
-  };
+  [method: string]: Path;
+}
+
+export interface Components {
+  requestBodies: { [name: string]: Pick<Response, "content"> };
 }
 
 export interface OpenAPI {
+  components?: Components;
   paths: { [path: string]: OpenAPIPath };
 }

@@ -40,3 +40,6 @@ const toTSDefinition = (
 
 const toTSInterface = (item: T.Item, interfaceName?: string): string =>
   `interface ${interfaceName} ${toTSDefinition(item)}`;
+
+export const isString = (s?: string): s is string =>
+  s !== undefined && s !== "";

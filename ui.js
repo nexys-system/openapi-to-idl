@@ -20,6 +20,9 @@ const UI = ({value}) => {
     }
     const [method] = methods;
     const path = responses[method];
+    if (!path) {
+      throw Error("path undefined");
+    }
     const code = C.toCode(path, pathname, method, parsed.components);
     return code;
   }).join("\n\n");

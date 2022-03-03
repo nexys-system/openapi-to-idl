@@ -10,7 +10,11 @@ const getRequestBody = ({requestBody}, components) => {
     console.log(r);
     return;
   }
-  return U.toTSDefinitionWithAny(requestBody.content["application/json"].schema);
+  const preSchema = requestBody.content["application/json"];
+  if (!preSchema) {
+    return;
+  }
+  return U.toTSDefinitionWithAny(preSchema.schema);
 };
 const getQuery = ({
   parameters
@@ -33,7 +37,11 @@ export const toCode = (path, pathName, method, components) => {
   if (!response) {
     throw Error("could not find response 200");
   }
-  const items = response.content["application/json"].schema;
+  const preSchema = response.content["application/json"];
+  if (!preSchema) {
+    throw Error("application/json undefined");
+  }
+  const {schema} = preSchema;
   const q = getQuery(path);
   const body = getRequestBody(path, components);
   const url = q ? `"${pathName}?" + paramsToString(query)` : `"${pathName}"`;
@@ -44,7 +52,7 @@ export const toCode = (path, pathName, method, components) => {
   if (body) {
     params.push(`body: ${body}`);
   }
-  return `export const ${path.operationId.replace(/-/g, "_")} = async (${params.join(", ")}): Promise<${U.toTSDefinitionWithAny(items)}> => {
+  return `export const ${path.operationId.replace(/-/g, "_")} = async (${params.join(", ")}): Promise<${U.toTSDefinitionWithAny(schema)}> => {
   const url = urlPrefix + ${url};
   
   const r = await fetch(url, { method: "${method.toUpperCase()}", headers, credentials: "same-origin"${body ? `, body: JSON.stringify(body)` : ""} });

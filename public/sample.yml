@@ -1,0 +1,946 @@
+openapi: 3.1.0
+info:
+  title: TSS Academy
+  version: "1.1"
+  summary: TSS Academy API
+  description: Reference for the TSS Academy API
+  contact:
+    name: Johan Boissard
+    url: "https://nexys.ch"
+    email: johan@nexys.io
+servers:
+  - url: "https://tssacademy.biz/api"
+    description: prod
+  - url: "https://test.tssacademy.biz/api"
+    description: test
+  - url: "https://stage.tssacademy.biz/api"
+    description: stage
+paths:
+  /notifications/list:
+    parameters: []
+    get:
+      summary: List of notifications
+      tags:
+        - meta
+      responses:
+        "200":
+          description: User Found
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                x-examples:
+                  example-1:
+                    - uuid: 6369cb4a-857e-11ec-8690-42010aac0004
+                      content: >-
+                        New TSS Academy content will be introduced on March 18,
+                        2022. Users with unfinished TSS Academy Graduate
+                        certificate are advised to complete the mandatory
+                        modules by March 18, 2022, otherwise their existing
+                        progress will be lost. Please contact the helpdesk if
+                        you would like to get more information.
+                      title: null
+                      isValidationRequired: false
+                items:
+                  type: object
+                  properties:
+                    uuid:
+                      type: string
+                      minLength: 1
+                    content:
+                      type: string
+                      minLength: 1
+                    title:
+                      type: string
+                    isValidationRequired:
+                      type: boolean
+                  required:
+                    - uuid
+                    - content
+                    - isValidationRequired
+              examples: {}
+      operationId: get-users-userId
+      description: retrive list of notifications
+      parameters: []
+  /module/list:
+    get:
+      summary: Module list
+      tags:
+        - module
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - points
+                    - language
+                    - description
+                    - title
+                    - status
+                    - tag
+                    - module
+                    - certModuleId
+                    - position
+                    - isMandatory
+                    - progress
+                    - passed
+                  properties:
+                    id:
+                      type: number
+                    points:
+                      type: number
+                    language:
+                      type: number
+                    description:
+                      type: string
+                      minLength: 1
+                    title:
+                      type: string
+                      minLength: 1
+                    status:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        description: {}
+                      required:
+                        - id
+                        - name
+                    tag:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        color:
+                          type: string
+                          minLength: 1
+                        label:
+                          type: string
+                          minLength: 1
+                      required:
+                        - id
+                        - color
+                        - label
+                    module:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                      required:
+                        - id
+                    certModuleId:
+                      type: number
+                    position:
+                      type: number
+                    isMandatory:
+                      type: number
+                    progress:
+                      type: number
+                    passed:
+                      type: number
+                x-examples:
+                  example-1:
+                    - id: 55
+                      points: 70
+                      language: 1
+                      description: >-
+                        "You never lose a deal on price. You only ever lose on
+                        not selling enough value" - Mladen Kresic. The
+                        Whiteboard methodology is a structured way that helps
+                        you understand your clients needs and the value TSS
+                        services can bring to their business. This module will
+                        enable you to understand the structure, the flow and the
+                        psychology behind the Whiteboard method.
+                      title: TSS Whiteboard Selling Methodology
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 2
+                        color: "#f04e37"
+                        label: tag.sales.basic
+                      module:
+                        id: 510
+                      certModuleId: 11
+                      position: 3
+                      isMandatory: 1
+                      progress: 88
+                      passed: 0
+                    - id: 56
+                      points: 80
+                      language: 1
+                      description: >-
+                        "Tell me the facts and I'll learn them. Tell me the
+                        truth and I'll believe. But tell me a story and it will
+                        live in my heart forever" - Native American proverb.
+                        Stories are the most powerful way to help clients
+                        understand how your services add real value to people
+                        like them. Decisions are made on emotions supported by
+                        facts. Stories link these two together. This module will
+                        help you understand the importance of stories, how to
+                        find them and how to structure them for biggest impact.
+                      title: Client Stories
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 2
+                        color: "#f04e37"
+                        label: tag.sales.basic
+                      module:
+                        id: 511
+                      certModuleId: 12
+                      position: 5
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 57
+                      points: 60
+                      language: 1
+                      description: >-
+                        "Champions are brilliant at the basics" - John Wooden.
+                        Whether you are a trained sales person or not we all use
+                        basic sales techniques in our business and personal
+                        lives. This module enables you to understand some of the
+                        key skills for any sales situation - developing a value
+                        proposition, objection handling and closing techniques.
+                      title: Basic Sales Skills
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 2
+                        color: "#f04e37"
+                        label: tag.sales.basic
+                      module:
+                        id: 512
+                      certModuleId: 13
+                      position: 4
+                      isMandatory: 1
+                      progress: 20
+                      passed: 0
+                    - id: 58
+                      points: 80
+                      language: 1
+                      description: >
+                        "Details create the big picture" - Sanford Weill. This
+                        module will take you through each of the TSS products
+                        that make up the "break/fix" - reactive - services part
+                        of the solution. You will understand all elements of TSS
+                        hardware maintenance.
+                      title: "Break = Fix - Hardware Maintenance "
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 3
+                        color: "#8cc63f"
+                        label: tag.proactive
+                      module:
+                        id: 513
+                      certModuleId: 14
+                      position: 10
+                      isMandatory: 1
+                      progress: 20
+                      passed: 0
+                    - id: 59
+                      points: 20
+                      language: 1
+                      description: >-
+                        "Being proactive means being reactive - ahead of time" -
+                        Anonymous. To add real value to your clients you want to
+                        be anticipating their needs in advance. TSS proactive
+                        services allow you to do this and provide real value to
+                        your clients. In this module you will learn about the
+                        main TSS proactive services - Proactive System Checks
+                        (PSC), Total Microcode Support (TMS) and Enhanced
+                        Technical Services (ETS).
+                      title: Integrated HW + SW Support
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 3
+                        color: "#8cc63f"
+                        label: tag.proactive
+                      module:
+                        id: 514
+                      certModuleId: 15
+                      position: 13
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 60
+                      points: 80
+                      language: 1
+                      description: >-
+                        "Life is really simple but we insist on making it
+                        complicated" - Confucius. Most of your clients will have
+                        multiple contracts with many different vendors making it
+                        complex and timeconsuming for them to manage. TSS
+                        Multivendor Support Services allows the client to
+                        simplify their support contracts and reduce the number
+                        of vendors they have to deal with. In this module you
+                        will understand how the TSS MVS product will help you
+                        provide additional value to your clients.
+                      title: Multi-Vendor Services and Managed Services
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 3
+                        color: "#8cc63f"
+                        label: tag.proactive
+                      module:
+                        id: 515
+                      certModuleId: 16
+                      position: 14
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 61
+                      points: 30
+                      language: 1
+                      description: >-
+                        "There is always room for those who can be relied upon
+                        to deliver the service when they say they will" -
+                        Napoleon Hill. TSS is delivered by outstanding people,
+                        best of breed processes and the latest technology to
+                        enable your clients to feel 100% comfortable that their
+                        service is in good hands. In this module you will learn
+                        about the key elements that make the TSS delivery
+                        solution the best in the industry.
+                      title: "People, Process and Technology"
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 4
+                        color: "#9b9b9b"
+                        label: tag.success
+                      module:
+                        id: 516
+                      certModuleId: 17
+                      position: 15
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 62
+                      points: 50
+                      language: 1
+                      description: null
+                      title: Linking Whiteboard to Value and Offerings
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 5
+                        color: "#f04e37"
+                        label: tag.sales.value
+                      module:
+                        id: 517
+                      certModuleId: 18
+                      position: 16
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 63
+                      points: 70
+                      language: 1
+                      description: >
+                        "To be the best, learn from the best" - Darren LaCroix.
+                        The core to running a successful annuity business is to
+                        get the basics right and build from the bottom up. This
+                        module looks at all the key elements you need to get
+                        right to develop a strong maintenance annuity revenue
+                        stream. It has been built based upon best practice
+                        developed over several decades.
+                      title: TSS  Best Practice
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 6
+                        color: "#8cc63f"
+                        label: tag.bestPractice
+                      module:
+                        id: 518
+                      certModuleId: 19
+                      position: 17
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 64
+                      points: 50
+                      language: 1
+                      description: >
+                        "Alone we can do so little, together we can do so much"
+                        - Helen Keller. This module is specific to TSS business
+                        partners and TSS BP sales people covering some specific
+                        areas of interest - like how to make money with IBM.
+                      title: "TSS Business Partner Best Practice "
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 6
+                        color: "#8cc63f"
+                        label: tag.bestPractice
+                      module:
+                        id: 519
+                      certModuleId: 20
+                      position: 18
+                      isMandatory: 1
+                      progress: 15
+                      passed: 0
+                    - id: 65
+                      points: 40
+                      language: 1
+                      description: null
+                      title: What's Next?
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 8
+                        color: "#82d1f5"
+                        label: tag.next
+                      module:
+                        id: 520
+                      certModuleId: 21
+                      position: 20
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 72
+                      points: 0
+                      language: 1
+                      description: Introduction to TSS Academy and welcome
+                      title: TSS Academy Introduction
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 7
+                        color: "#82d1f5"
+                        label: tag.intro
+                      module:
+                        id: 527
+                      certModuleId: 28
+                      position: 2
+                      isMandatory: 0
+                      progress: 100
+                      passed: 1
+                    - id: 73
+                      points: 0
+                      language: 1
+                      description: null
+                      title: Geography Specific Lessons
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 9
+                        color: "#82d1f5"
+                        label: tag.geo.specific
+                      module:
+                        id: 528
+                      certModuleId: 29
+                      position: 19
+                      isMandatory: 0
+                      progress: 0
+                      passed: 0
+                    - id: 74
+                      points: 0
+                      language: 1
+                      description: >-
+                        "Details create the big picture" - Sanford Weill. This
+                        module will take you through each of the TSS products
+                        that make up the "break/fix" - Reactive - services part
+                        of the solution. You will understand all elements of TSS
+                        software maintenance.
+                      title: Break = Fix - Software Maintenance and Media Retention
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 3
+                        color: "#8cc63f"
+                        label: tag.proactive
+                      module:
+                        id: 529
+                      certModuleId: 30
+                      position: 11
+                      isMandatory: 1
+                      progress: 0
+                      passed: 0
+                    - id: 253
+                      points: 40
+                      language: 1
+                      description: >-
+                        Get an overview of the main topics from Negotiation
+                        Training which focuses on Business-to-Business
+                        Relationships and Sales Negotiation in Today’s
+                        Marketplace.
+                      title: Negotiations Training
+                      status:
+                        id: 3
+                        name: active
+                        description: null
+                      tag:
+                        id: 2
+                        color: "#f04e37"
+                        label: tag.sales.basic
+                      module:
+                        id: 534
+                      certModuleId: 34
+                      position: 6
+                      isMandatory: 1
+                      progress: 12
+                      passed: 0
+      operationId: get-module-list
+      description: get the list of modules
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: lang
+          description: requested lang
+  /module/detail:
+    post:
+      summary: Module detail
+      operationId: post-module-detail
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ""
+                type: object
+                properties:
+                  id:
+                    type: number
+                  isMandatory:
+                    type: number
+                  position:
+                    type: number
+                  module:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      externalId:
+                        type: number
+                      label: {}
+                      points:
+                        type: number
+                      color: {}
+                      tag:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                        required:
+                          - id
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                        required:
+                          - id
+                    required:
+                      - id
+                      - externalId
+                      - points
+                      - tag
+                      - status
+                  cert:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                    required:
+                      - id
+                  description:
+                    type: string
+                    minLength: 1
+                  title:
+                    type: string
+                    minLength: 1
+                required:
+                  - id
+                  - isMandatory
+                  - position
+                  - module
+                  - cert
+                  - description
+                  - title
+                x-examples:
+                  example-1:
+                    id: 28
+                    isMandatory: 0
+                    position: 2
+                    module:
+                      id: 527
+                      externalId: 1000
+                      label: null
+                      points: 0
+                      color: null
+                      tag:
+                        id: 7
+                      status:
+                        id: 3
+                    cert:
+                      id: 1
+                    description: Introduction to TSS Academy and welcome
+                    title: TSS Academy Introduction
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: language
+      requestBody:
+        $ref: "#/components/requestBodies/by-id"
+      tags:
+        - module
+      description: Get the module content/detail
+  /lesson/list:
+    parameters: []
+    post:
+      summary: Lesson list
+      operationId: post-lesson-list
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - description
+                    - title
+                    - language
+                    - externalId
+                    - isMandatory
+                    - isTest
+                    - passed
+                  properties:
+                    id:
+                      type: number
+                    description:
+                      type: string
+                      minLength: 1
+                    title:
+                      type: string
+                      minLength: 1
+                    testNQuestion: {}
+                    language:
+                      type: number
+                    testWeight: {}
+                    externalId:
+                      type: number
+                    testPassrate: {}
+                    reference: {}
+                    isMandatory:
+                      type: number
+                    isTest:
+                      type: boolean
+                    passed:
+                      type: boolean
+                x-examples:
+                  example-1:
+                    - id: 649
+                      description: You get an overview of the TSS Academy and its content.
+                      title: Introduction to TSS Academy
+                      testNQuestion: null
+                      language: 1
+                      testWeight: null
+                      externalId: 100010
+                      testPassrate: null
+                      reference: null
+                      isMandatory: 0
+                      isTest: false
+                      passed: true
+      description: get the list of lessons
+      tags:
+        - lesson
+      requestBody:
+        $ref: "#/components/requestBodies/by-id"
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: language
+  /lesson/detail:
+    post:
+      summary: Lesson detail
+      operationId: post-lesson-detail
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ""
+                type: object
+                properties:
+                  lesson:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      description:
+                        type: string
+                        minLength: 1
+                      title:
+                        type: string
+                        minLength: 1
+                      testNQuestion: {}
+                      language:
+                        type: number
+                      testWeight: {}
+                      externalId:
+                        type: number
+                      testPassrate: {}
+                      reference: {}
+                      isMandatory:
+                        type: number
+                      isTest:
+                        type: boolean
+                      passed:
+                        type: boolean
+                    required:
+                      - id
+                      - description
+                      - title
+                      - language
+                      - externalId
+                      - isMandatory
+                      - isTest
+                      - passed
+                  prev: {}
+                required:
+                  - lesson
+                x-examples:
+                  example-1:
+                    lesson:
+                      id: 649
+                      description: You get an overview of the TSS Academy and its content.
+                      title: Introduction to TSS Academy
+                      testNQuestion: null
+                      language: 1
+                      testWeight: null
+                      externalId: 100010
+                      testPassrate: null
+                      reference: null
+                      isMandatory: 0
+                      isTest: false
+                      passed: true
+                    prev: null
+      description: get the lesson details
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                language:
+                  type: string
+                moduleId:
+                  type: number
+              required:
+                - id
+                - language
+                - moduleId
+      tags:
+        - lesson
+  /lesson/resources:
+    get:
+      summary: Lesson Resources
+      tags:
+        - lesson
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ""
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - id
+                    - category
+                    - resource
+                    - position
+                    - content
+                  properties:
+                    id:
+                      type: number
+                    category:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                      required:
+                        - id
+                    resource:
+                      type: object
+                      properties:
+                        subType:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                          required:
+                            - id
+                        url:
+                          type: string
+                          minLength: 1
+                        type:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                          required:
+                            - id
+                        id:
+                          type: number
+                        label:
+                          type: string
+                          minLength: 1
+                      required:
+                        - subType
+                        - url
+                        - type
+                        - id
+                        - label
+                    position:
+                      type: number
+                    content:
+                      type: boolean
+                x-examples:
+                  example-1:
+                    - id: 3123
+                      category:
+                        id: 1
+                      resource:
+                        subType:
+                          id: 5
+                        url: "https://video.ibm.com/embed/recorded/126236508"
+                        type:
+                          id: 1
+                        id: 2360
+                        label: Introduction to TSS Academy
+                      position: 1216
+                      content: true
+      operationId: get-lesson-resources
+      description: get the lesson resources
+      requestBody:
+        $ref: "#/components/requestBodies/by-id"
+      parameters: []
+  /lesson/resource/record:
+    post:
+      description: records user progress
+      summary: Lesson record progress
+      operationId: post-lesson-resource-record
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+      tags:
+        - lesson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ""
+              type: object
+              properties:
+                resource:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                  required:
+                    - id
+                lesson:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                  required:
+                    - id
+              required:
+                - resource
+                - lesson
+              x-examples:
+                example-1:
+                  resource:
+                    id: 3123
+                  lesson:
+                    id: 649
+components:
+  schemas: {}
+  requestBodies:
+    by-id:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: number
+            required:
+              - id
+      description: fetch resource by id
+  securitySchemes: {}
+tags:
+  - name: meta
+  - name: module
+  - name: lesson

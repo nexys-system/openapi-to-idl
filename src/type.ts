@@ -7,7 +7,7 @@ export interface Item {
   items?: Item;
 }
 
-export type Method = "get" | "post";
+export type Method = "get" | "post" | "put" | "delete";
 
 type ContentType = "application/json";
 
@@ -24,7 +24,7 @@ export interface Parameter {
   schema: Pick<Item, "type">;
 }
 
-type ResponseCode = 200 | 201 | 400; // responsecode: 200, 201, 400, etc
+type ResponseCode = 200 | 201 | 400 | 401 | 403 | 404 | 500;
 
 export interface Path {
   description: string;
